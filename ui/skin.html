@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>皮肤上传/查看</title>
+</head>
+<body>
+  <img src="/api/skin/show" /><br>
+  <form action="/api/skin/upload" method="post" enctype="multipart/form-data">
+    <input type="file" name="file" value="选择皮肤文件" /><br>
+    <input id="submit" type="submit" value="上传" /><br>
+  </form>
+
+  <script src="/js/jQuery.min.js"></script>
+  <script src="/js/skin.js"></script>
+</body>
+</html>

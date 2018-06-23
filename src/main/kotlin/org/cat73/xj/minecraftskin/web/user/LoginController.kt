@@ -28,7 +28,7 @@ class LoginController {
     fun login(@Valid @RequestBody vo: LoginParamVO): Result<*> {
         val loginSuccess = this.ebeanServer.find(CrazyLoginAccounts::class.java)
                 .where()
-                .ieq("lower(name)", vo.username)
+                .ieq("lower(name)", vo.username.toLowerCase())
                 .ieq("md5(password)", vo.password.toLowerCase())
                 .findCount() > 0
 

@@ -1,6 +1,7 @@
 package org.cat73.xj.minecraftskin.web.skin
 
 import org.cat73.xj.minecraftskin.bean.Result
+import org.cat73.xj.minecraftskin.common.interceptor.auth.NoNeedAuth
 import org.cat73.xj.minecraftskin.util.Login
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.MediaType
@@ -44,16 +45,19 @@ class SkinController {
         file.inputStream.copyTo(targetFile.outputStream())
 
         // 返回结果
-        return Result.success<Any>()
+        return Result.success<Any>("上传成功")
     }
 
     /**
      * 查看皮肤
      */
     @GetMapping("/show")
-    fun show(username: String, response: HttpServletResponse) {
+    @NoNeedAuth
+    fun show(username: String?, response: HttpServletResponse) {
+        val useUsername = username ?: Login.username ?: return
+
         // 找到要输出的文件
-        val file = File(this.uploadPath, username.toLowerCase())
+        val file = File(this.uploadPath, useUsername.toLowerCase())
         if (!file.exists()) {
             return
         }
