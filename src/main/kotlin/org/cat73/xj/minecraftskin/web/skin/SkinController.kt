@@ -31,8 +31,11 @@ class SkinController {
         if (file.isEmpty) {
             return Result.fail<Any>("没有要上传的皮肤")
         }
-        if (file.size > 500 * 1024) {
-            return Result.fail<Any>("皮肤文件不能大于 500kb")
+        if (file.size > 1024 * 1024) {
+            return Result.fail<Any>("皮肤文件不能大于 1MB")
+        }
+        if (!listOf("skin", "cloak").contains(type)) {
+            Result.fail<Any>("皮肤类型不正确")
         }
 
         // 创建保存文件的目录
@@ -53,6 +56,7 @@ class SkinController {
     @NoNeedAuth
     fun show(username: String?, @PathVariable type: String, response: HttpServletResponse) {
         val useUsername = username ?: Login.username ?: return
+        if (!listOf("skin", "cloak").contains(type)) return
 
         // 找到要输出的文件
         val file = File(this.uploadPath, type.toLowerCase() + "_" + useUsername.toLowerCase())
