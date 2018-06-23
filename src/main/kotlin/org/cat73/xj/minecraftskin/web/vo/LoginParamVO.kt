@@ -12,7 +12,7 @@ data class LoginParamVO(
          * 用户名(忽略大小写)
          */
         @NotNull(message = "用户名不能为空")
-        @Pattern(regexp = "\\w{4,16}", message = "用户名格式不符合规则")
+        @Pattern(regexp = "[a-zA-Z0-9_]{3,16}", message = "用户名格式不符合规则")
         val username: String,
         /**
          * 密码(md5，不区分大小写)

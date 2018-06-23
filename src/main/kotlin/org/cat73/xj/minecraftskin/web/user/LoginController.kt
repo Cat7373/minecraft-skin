@@ -28,12 +28,12 @@ class LoginController {
     fun login(@Valid @RequestBody vo: LoginParamVO): Result<*> {
         val loginSuccess = this.ebeanServer.find(CrazyLoginAccounts::class.java)
                 .where()
-                .ieq("name", vo.username)
+                .ieq("lower(name)", vo.username)
                 .ieq("md5(password)", vo.password.toLowerCase())
                 .findCount() > 0
 
         return if (loginSuccess) {
-            this.loginSuccess(vo.username)
+            this.loginSuccess(vo.username.toLowerCase())
             Result.success<Any>()
         } else {
             Result.fail<Any>("登录失败：用户名或密码错误")
