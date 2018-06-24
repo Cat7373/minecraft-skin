@@ -84,8 +84,8 @@ class SkinController {
         val cloak = File(this.uploadPath, "cloak_" + username.toLowerCase()).exists()
 
         return SkinInfoVO(
-                if (skin) "/api/skin/show/skin?username=$username" else null,
-                if (cloak) "/api/skin/show/cloak?username=$username" else null
+                if (skin) "/api/skin/show/skin?username=$username&r=${Math.random()}" else null,
+                if (cloak) "/api/skin/show/cloak?username=$username&r=${Math.random()}" else null
         )
     }
 }
