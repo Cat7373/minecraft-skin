@@ -43,7 +43,7 @@ class SkinController {
 
         // 保存文件
         val targetFile = File(this.uploadPath, type.toLowerCase() + "_" + Login.username)
-        file.inputStream.copyTo(targetFile.outputStream())
+        file.inputStream.use { i -> targetFile.outputStream().use { o -> i.copyTo(o) }}
 
         // 返回结果
         return Result.success<Any>("上传成功")
@@ -70,12 +70,13 @@ class SkinController {
         response.contentType = MediaType.IMAGE_PNG_VALUE
 
         // 输出文件内容
-        file.inputStream().copyTo(response.outputStream)
+        file.inputStream().use { it.copyTo(response.outputStream) }
     }
 
     /**
      * 查看皮肤信息
      */
+    // TODO 正版 https://sessionserver.mojang.com/session/minecraft/profile/af2aa89ee75548f3918b5134267386a4?unsigned=false
     @GetMapping("/info")
     @NoNeedAuth
     fun info(username: String, response: HttpServletResponse): SkinInfoVO {
